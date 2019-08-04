@@ -55,16 +55,38 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
+          <div v-if="user">
+            Welcome {{user.username}}
+          </div>
+        </div>
+        <div v-if="user" class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+              Account
+          </a>
+          <div class="navbar-dropdown">
+            <a href="#" class="navbar-item">
+                Profile
+            </a>
+            <hr class="navbar-divider">
+            <a 
+              class="navbar-item"
+              @click.prevent="logout"
+            >
+                Logout
+            </a>
+          </div>
+        </div>
+        <div v-else class="navbar-item has-dropdown ">
           <div class="buttons">
             <router-link 
+              :to="{name: 'PageRegister'}" 
               class="button is-primary"
-              :to="{name: 'PageRegister'}"
             >
               <strong>Sign up</strong>
             </router-link>
             <router-link 
+              :to="{name: 'PageLogin'}" 
               class="button is-light"
-              :to="{name: 'PageLogin'}"
             >
               Log in
             </router-link>
@@ -76,7 +98,17 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
+
   export default {
+    computed: {
+      ...mapGetters({
+        'user': 'auth/authUser'
+        })
+    },
+    methods: {
+      ...mapActions('auth', ['logout'])
+    }
   }
 </script>
 

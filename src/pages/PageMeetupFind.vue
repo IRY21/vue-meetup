@@ -25,7 +25,10 @@
     </div>
     <div class="container">
       <section class="section page-find">
-        <div class="columns cover is-multiline">
+        <div 
+          class="columns cover is-multiline"
+          v-if="meetups.length"
+        >
           <div v-for="meetup of meetups" :key="meetup._id" class="column is-one-third" :style="{'min-height': '160px'}">
             <router-link :to="'/meetups/' + meetup._id" class="meetup-card-find"
                href="#"
@@ -47,7 +50,7 @@
             </router-link>
           </div>
         </div>
-        <div>
+        <div v-else>
           <span class="tag is-warning is-large">No meetups found :( You might try to change search criteria (:</span>
         </div>
       </section>

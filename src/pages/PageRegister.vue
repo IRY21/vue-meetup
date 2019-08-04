@@ -194,7 +194,6 @@
 <script>
   import pageLoader from "@/mixins/pageLoader"
 
-  import { mapActions } from 'vuex'
   import { required, email, minLength, url, sameAs } from "vuelidate/lib/validators";
   import { supportedFileType } from "@/helpers/validators";
 
@@ -251,6 +250,8 @@
       register() {
         this.$v.form.$touch()
         this.$store.dispatch('auth/registerUser', this.form)
+          .then(() => this.$router.push('/login'))
+          .catch(err => console.error(err))
       }
     }
   }

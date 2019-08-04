@@ -53,7 +53,7 @@
                     autocomplete="current-password"
                     value=""
                     v-model="form.password"
-                    @blur="$v.form.email.$touch()"
+                    @blur="$v.form.password.$touch()"
                   >
                   <div
                     class="form-error"
@@ -133,6 +133,8 @@
       login() {
         this.$v.form.$touch()
         this.$store.dispatch('auth/loginWithEmailAndPassword', this.form)
+          .then(() => this.$router.push('/'))
+          .catch((err) => console.error(err))
       }
     }
   }

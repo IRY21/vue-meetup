@@ -54,5 +54,24 @@ userSchema.methods.comparePassword = function(candidatePassword, callback){
    });
 }
 
+userSchema.methods.generateJWT = function() {
+  return jwt.sign({
+    id: this._id,
+    email: this.email
+  }, config.JWT_SECRET, { expiresIn: '1h' })
+}
+
+userSchema.methods.toAuthJSON = function() {
+  return {
+    id: this._id,
+    avatar: this.avatar,
+    name: this.name,
+    username: this.username,
+    info: this.info,
+    email: this.email,
+    joinedMeetups: this.joinedMeetups,
+    token: this.generateJWT()
+  }
+}
 
 module.exports = mongoose.model('User', userSchema );
